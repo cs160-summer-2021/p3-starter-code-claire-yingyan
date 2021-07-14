@@ -5,13 +5,17 @@ h1 {
 
 html,
 body {
+    background-image: linear-gradient(to bottom, #b7b5ff, #eabcdc, #ffd2f2);
     width: 100%;
     height: 100%;
+    color: white;
+    text-shadow: 5px 10px 10px #888888;
 }
 
 h2 {
     font-size: 40px;
     text-align: center;
+
 }
 h2 #left {
     text-align: left;
@@ -36,19 +40,25 @@ button {
 }
 #relaxed {
     font-size: 60px;
-    background-image: linear-gradient(to bottom, rgb(98, 255, 203), rgb(187, 255, 147));
+    background-image: linear-gradient(to bottom,#74C5FF, #7272FF, #D797FF);
     margin-left:8%;
     margin-right: 50px;
+    color: white;
+    text-shadow: 5px 5px 5px #888888;
 }
 #creative {
     font-size: 60px;
     background-image: linear-gradient(to bottom, rgb(255, 117, 237),rgb(255, 230, 117), rgb(140, 255, 125), rgb(147, 181, 255));
-    background-color: aqua;
+    color: white;
+    text-shadow: 5px 5px 5px #888888;
+
 }
 
 
 footer {
     position: absolute;
+    border-top: 5px solid rgb(255, 255, 255);
+    filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.4));
     /* background-color: pink; */
     bottom: 15px;
     height: 115px;
@@ -61,7 +71,8 @@ footer {
 footer a {
     display: block;
     text-decoration: none;
-    color: black;
+    color: white;
     float: left;
     width: 25%;
+    filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.4));
 }
