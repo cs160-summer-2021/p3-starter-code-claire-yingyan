@@ -10,27 +10,39 @@ body {
 }
 
 h2 {
-    font-family: "Source Sans Pro";
     font-size: 40px;
     text-align: center;
 }
+h2 #left {
+    text-align: left;
+
+}
+h3 {
+    font-size: 30px;
+    margin-left: 10%;
+    margin-right:10%;
+    line-height: 2em;
+    text-align: left;
+}
+
 
 button {
     height:400px;
     width:400px;
     border-radius: 15%;
     border: none;
-    background-color: aqua;
+    box-shadow: 5px 10px 10px #888888;
+
 }
 #relaxed {
-    font-size: 80px;
+    font-size: 60px;
     background-image: linear-gradient(to bottom, rgb(98, 255, 203), rgb(187, 255, 147));
-    margin-left:11%;
-    margin-right: 15px;
+    margin-left:8%;
+    margin-right: 50px;
 }
 #creative {
-    font-size: 80px;
-    background-image: linear-gradient(to bottom, rgb(255, 169, 244), rgb(189, 255, 180), rgb(147, 181, 255));
+    font-size: 60px;
+    background-image: linear-gradient(to bottom, rgb(255, 117, 237),rgb(255, 230, 117), rgb(140, 255, 125), rgb(147, 181, 255));
     background-color: aqua;
 }
 
@@ -38,7 +50,7 @@ button {
 footer {
     position: absolute;
     /* background-color: pink; */
-    bottom: 0;
+    bottom: 15px;
     height: 115px;
     width: 100%;
     font-size: 40px;

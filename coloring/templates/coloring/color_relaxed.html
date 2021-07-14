@@ -2,36 +2,135 @@
 
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>Info</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  	<title>Relaxed Mode</title>
 
-    <link rel="stylesheet" type="text/css" href="{% static 'coloring/vendors/bootstrap/css/bootstrap.css' %}" />
+	<script type="text/javascript" src="{% static 'coloring/vendors/jquery/jquery-3.3.1.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'coloring/vendors/paper/paper-full.min.js' %}"></script>
+	<link rel="stylesheet" type="text/css" href="{% static 'coloring/vendors/bootstrap/css/bootstrap.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'coloring/style.css' %}" />
+
+
+	<style type="text/css">
+		#color-palette {
+			left:15px;
+			width: 100px;
+			background-color: #f1f1f1;
+			display: flex;
+			flex-wrap: wrap;
+			position: absolute;
+			top: 0;
+			/* display: block; */
+		}
+
+		.swatch {
+			width: 80px;
+			height: 80px;
+			-moz-border-radius: 12px;
+			-webkit-border-radius: 12px;
+			border-radius: 12px;
+			margin: 3px;
+		}
+
+		#myCanvas {
+			text-align: center;
+		    padding-right: 0;
+			padding-top: 20%;
+		    margin-left: 30%;
+		    margin-right: auto;
+		    display: block;
+		}
+	</style>
+
+	<script type="text/javascript" canvas="canvas">
+		window.onload = function() {
+			var canvas = document.getElementById('myCanvas');
+
+			// coloring page
+			var mandala = {
+				item: null,
+				lastClicked: null,
+				filePath: '/static/coloring/images/bug robot.svg'
+			};
+
+			// color palette
+			var cp = {
+				history: ["#000000"], // black selected by default
+				options: [],
+				$container: $('#color-palette')
+			}
+
+			function myCustomInteraction() {
+				var tool = new paper.Tool();
+
+				tool.onMouseDown = function (event) {
+				    var hit = mandala.item.hitTest(event.point, { tolerance: 10, fill: true });
+				    if (hit) {
+				    		// Color pallette keeps track of the full history of colors, though we
+				    		// only color in with the most-recent color.
+				        hit.item.fillColor = cp.history[cp.history.length - 1];
+				    }
+				}
+			}
+
+			// create a color palette with the given colors
+			function createColorPalette(colors){
+
+				// create a swatch for each color
+				for (var i = colors.length - 1; i >= 0; i--) {
+					var $swatch = $("<div>").css("background-color", colors[i])
+									   .addClass("swatch");
+					$swatch.click(function(){
+						// add color to the color palette history
+					  	cp.history.push($(this).css("background-color"));
+					});
+					cp.$container.append($swatch);
+				}
+			}
+
+			// loads a set of colors from a json to create a color palette
+			function getColorsCreatePalette(){
+				cp.$container.html(" ");
+				$.getJSON('/static/coloring/vendors/material/material-colors.json', function(colors){
+					var keys = Object.keys(colors);
+					for (var i = keys.length - 1; i >= 0; i--) {
+						cp.options.push(colors[keys[i]][500]);
+					}
+					createColorPalette(cp.options);
+				});
+			}
+
+			function init(custom){
+				paper.setup(canvas);
+				getColorsCreatePalette();
+
+				paper.project.importSVG(mandala.filePath, function(item) {
+					console.log(item);
+					//print("hello");
+					mandala.item = item._children["design-freepik"];
+				    paper.project.insertLayer(0,mandala.item);
+
+				    if (custom) {
+				    	myCustomInteraction();
+				    } else {
+				    	myGradientInteraction();
+				    }
+
+				});
+			}
+
+			// Set up the mandala interactivity.
+			init(true);
+		}
+	</script>
 </head>
-
-<body style="background-image: linear-gradient(to right, rgb(212, 255, 241), rgb(223, 212, 255))">
-    <br /><br /><br /><br />
-    <h1> Paintify </h1>
-    <div>
-        <br/>
-        <h2>Info and Tips</h2>
-        <h3>To clear a section in your artwork, use white to fill it in!</h3>
-        <br/>
-        <h2>Relaxed Mode</h2>
-        <h3>Sit back, relax, and color in our Relaxed Mode! Having a preselected color palette makes the coloring experience more relaxing and less stressful since you don't have to think or worry about what colors to choose. 
-            We also offer easier coloring pages!
-        </h3>
-        <br/>
-        <h2>Creative Mode</h2>
-        <h3>Feel ultimate creative freedom in Creative Mode! Customize your own colors with our easy to use color wheel. Choose any color you want from an infite rainbow of colors!
-            We also offer more complex coloring pages!
-        </h3>
-
-
-    </div>
+<body>
+	<h1>Colorify</h1>
+	<h2>Relaxed Mode</h2>
+	<canvas id="myCanvas" width="750px" height="750px"></canvas>
+	<div id="color-palette"></div>
 </body>
-
 <footer>
     <a href="/coloring/info">
         <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-info-square" viewBox="0 0 16 16">
@@ -65,5 +164,4 @@
     </a>
 
 </footer>
-
 </html>
