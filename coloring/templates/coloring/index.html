@@ -40,6 +40,7 @@
 	<script type="text/javascript" canvas="canvas">
 		window.onload = function() {
 			var canvas = document.getElementById('myCanvas');
+			var lastColor = null;
 
 			// coloring page
 			var mandala = {
@@ -78,6 +79,11 @@
 					$swatch.click(function(){
 						// add color to the color palette history
 					  	cp.history.push($(this).css("background-color"));
+						$(this).css('border', '2px solid black');
+						if (lastColor != null) {
+							$(lastColor).css('border', 'none');
+						}
+						lastColor = this;
 					});
 					cp.$container.append($swatch);
 				}
