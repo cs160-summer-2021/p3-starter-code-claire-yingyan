@@ -4,27 +4,40 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>Creative Mode</title>
+  	<title>Relaxed Mode</title>
 
 	<script type="text/javascript" src="{% static 'coloring/vendors/jquery/jquery-3.3.1.min.js' %}"></script>
-	<script type="text/javascript" charset="utf-8" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 	<script type="text/javascript" src="{% static 'coloring/vendors/paper/paper-full.min.js' %}"></script>
-	<script type="text/javascript" src="{% static 'coloring/vendors/farbtastic-master/src/farbtastic.js' %}"></script>
 	<link rel="stylesheet" type="text/css" href="{% static 'coloring/vendors/bootstrap/css/bootstrap.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'coloring/style.css' %}" />
 
+
 	<style type="text/css">
-		#colorpicker {
-			background-color: rgb(255, 255, 255);
-			height: 300px;
-			width: 300px;
-			padding: 5px;
+		#color-palette {
+			left:15px;
+			width: 100px;
+			background-color: #f1f1f1;
+			display: flex;
+			flex-wrap: wrap;
+			position: absolute;
+			top: 0;
+			/* display: block; */
+		}
+
+		.swatch {
+			width: 80px;
+			height: 80px;
+			-moz-border-radius: 12px;
+			-webkit-border-radius: 12px;
+			border-radius: 12px;
+			margin: 3px;
 		}
 
 		#myCanvas {
-			padding-left: 0;
+			text-align: center;
 		    padding-right: 0;
-		    margin-left: auto;
+			padding-top: 20%;
+		    margin-left: 30%;
 		    margin-right: auto;
 		    display: block;
 		}
@@ -38,15 +51,15 @@
 			var mandala = {
 				item: null,
 				lastClicked: null,
-				filePath: '/static/coloring/images/mandala-freepik.svg'
+				filePath: '/static/coloring/images/bug robot.svg'
 			};
 
 			// color palette
-			var cc = {
-				history: []
+			var cp = {
+				history: ["#000000"], // black selected by default
+				options: [],
+				$container: $('#color-palette')
 			}
-
-			//$("#colorpicker").draggable();
 
 			function myCustomInteraction() {
 				var tool = new paper.Tool();
@@ -56,19 +69,45 @@
 				    if (hit) {
 				    		// Color pallette keeps track of the full history of colors, though we
 				    		// only color in with the most-recent color.
-				        hit.item.fillColor = cc.history[cc.history.length - 1];
+				        hit.item.fillColor = cp.history[cp.history.length - 1];
 				    }
 				}
 			}
 
+			// create a color palette with the given colors
+			function createColorPalette(colors){
+
+				// create a swatch for each color
+				for (var i = colors.length - 1; i >= 0; i--) {
+					var $swatch = $("<div>").css("background-color", colors[i])
+									   .addClass("swatch");
+					$swatch.click(function(){
+						// add color to the color palette history
+					  	cp.history.push($(this).css("background-color"));
+					});
+					cp.$container.append($swatch);
+				}
+			}
+
+			// loads a set of colors from a json to create a color palette
+			function getColorsCreatePalette(){
+				cp.$container.html(" ");
+				$.getJSON('/static/coloring/vendors/material/material-colors.json', function(colors){
+					var keys = Object.keys(colors);
+					for (var i = keys.length - 1; i >= 0; i--) {
+						cp.options.push(colors[keys[i]][500]);
+					}
+					createColorPalette(cp.options);
+				});
+			}
+
 			function init(custom){
 				paper.setup(canvas);
-				// getColorsCreatePalette();
-				$('#colorpicker').farbtastic(function (color) {
-					cc.history.push(color);
-				});
+				getColorsCreatePalette();
 
 				paper.project.importSVG(mandala.filePath, function(item) {
+					console.log(item);
+					//print("hello");
 					mandala.item = item._children["design-freepik"];
 				    paper.project.insertLayer(0,mandala.item);
 
@@ -88,8 +127,8 @@
 </head>
 <body>
 	<h1>Colorify</h1>
-	<h2>Creative Mode</h2>
+	<h2>Relaxed Mode</h2>
 	<canvas id="myCanvas" width="750px" height="750px"></canvas>
-	<div id="colorpicker"></div>
+	<div id="color-palette"></div>
 </body>
 </html>
