@@ -1,0 +1,55 @@
+h1 {
+    text-align: center;
+    font-size: 80px;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+h2 {
+    font-family: "Source Sans Pro";
+    font-size: 40px;
+    text-align: center;
+}
+
+button {
+    height:400px;
+    width:400px;
+    border-radius: 15%;
+    border: none;
+    background-color: aqua;
+}
+#relaxed {
+    font-size: 80px;
+    background-image: linear-gradient(to bottom, rgb(98, 255, 203), rgb(187, 255, 147));
+    margin-left:11%;
+    margin-right: 15px;
+}
+#creative {
+    font-size: 80px;
+    background-image: linear-gradient(to bottom, rgb(255, 169, 244), rgb(189, 255, 180), rgb(147, 181, 255));
+    background-color: aqua;
+}
+
+
+footer {
+    position: absolute;
+    /* background-color: pink; */
+    bottom: 0;
+    height: 115px;
+    width: 100%;
+    font-size: 40px;
+    text-align: center;
+    padding: 20px;
+}
+
+footer a {
+    display: block;
+    text-decoration: none;
+    color: black;
+    float: left;
+    width: 25%;
+}
