@@ -3,7 +3,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 1200 1064.7" enable-background="new 0 0 1200 1064.7" xml:space="preserve">
-<g>id="design-freepik"</g>
+<g id="design-freepik">
 <polygon fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="900,307.1 900,307.1 750,307.1 
 	750,307.1 750,307.1 750,307.1 900,307.1 900,307.1 "/>
 <rect x="928.6" y="232.1" transform="matrix(-0.4472 -0.8944 0.8944 -0.4472 1257.7064 1241.5073)" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" width="167.7" height="0"/>
@@ -630,4 +630,6 @@
 <polygon fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="825,1057.1 825,1057.1 825,1057.1 "/>
 <polygon fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="975,1057.1 975,1057.1 975,1057.1 "/>
 <polygon fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="1125,1057.1 1125,1057.1 1125,1057.1 "/>
+
+</g>
 </svg>

@@ -6,9 +6,11 @@ urlpatterns = [
     path('new_interaction', views.index, name='new_interaction'),
     path('home', views.home, name='home'),
     path('color_relaxed', views.color_relaxed, name='color_relaxed'),
+    path('color_relaxed_panda', views.color_relaxed_panda, name='color_relaxed_panda'),
     path('color_creative', views.color_creative, name='color_creative'),
-    path('rec_easy', views.rec_easy, name='rec_easy'),
-    path('rec_creative', views.rec_hard, name='rec_creative'),
+    path('color_creative_triangles', views.color_creative_triangles, name='color_creative_triangles'),
+    path('rec_relaxed', views.rec_relaxed, name='rec_relaxed'),
+    path('rec_creative', views.rec_creative, name='rec_creative'),
     path('info', views.info, name='info')
 
 ]
