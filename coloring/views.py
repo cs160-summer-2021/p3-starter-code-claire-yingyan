@@ -17,8 +17,8 @@ def rec_hard(request):
 def color_relaxed(request):
     return render(request, 'coloring/color_relaxed.html')
 
-def color_hard(request):
-    return render(request, 'coloring/color_hard.html')
+def color_creative(request):
+    return render(request, 'coloring/color_creative.html')
 
 def info(request):
     return render(request, 'coloring/info.html')

@@ -2,36 +2,96 @@
 
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>Info</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Creative Mode</title>
 
-    <link rel="stylesheet" type="text/css" href="{% static 'coloring/vendors/bootstrap/css/bootstrap.css' %}" />
+	<script type="text/javascript" src="{% static 'coloring/vendors/jquery/jquery-3.3.1.min.js' %}"></script>
+	<script type="text/javascript" charset="utf-8" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<script type="text/javascript" src="{% static 'coloring/vendors/paper/paper-full.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'coloring/vendors/farbtastic-master/src/farbtastic.js' %}"></script>
+	<link rel="stylesheet" type="text/css" href="{% static 'coloring/vendors/bootstrap/css/bootstrap.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'coloring/style.css' %}" />
+
+	<style type="text/css">
+		#colorpicker {
+			background-color: rgb(255, 255, 255);
+			height: 300px;
+			width: 300px;
+			padding: 5px;
+		}
+
+		#myCanvas {
+			padding-left: 0;
+		    padding-right: 0;
+		    margin-left: auto;
+		    margin-right: auto;
+		    display: block;
+		}
+	</style>
+
+	<script type="text/javascript" canvas="canvas">
+		window.onload = function() {
+			var canvas = document.getElementById('myCanvas');
+
+			// coloring page
+			var mandala = {
+				item: null,
+				lastClicked: null,
+				filePath: '/static/coloring/images/mandala-freepik.svg'
+			};
+
+			// color palette
+			var cc = {
+				history: []
+			}
+
+			//$("#colorpicker").draggable();
+
+			function myCustomInteraction() {
+				var tool = new paper.Tool();
+
+				tool.onMouseDown = function (event) {
+				    var hit = mandala.item.hitTest(event.point, { tolerance: 10, fill: true });
+				    if (hit) {
+				    		// Color pallette keeps track of the full history of colors, though we
+				    		// only color in with the most-recent color.
+				        hit.item.fillColor = cc.history[cc.history.length - 1];
+				    }
+				}
+			}
+
+			function init(custom){
+				paper.setup(canvas);
+				// getColorsCreatePalette();
+				$('#colorpicker').farbtastic(function (color) {
+					cc.history.push(color);
+				});
+
+				paper.project.importSVG(mandala.filePath, function(item) {
+					mandala.item = item._children["design-freepik"];
+				    paper.project.insertLayer(0,mandala.item);
+
+				    if (custom) {
+				    	myCustomInteraction();
+				    } else {
+				    	myGradientInteraction();
+				    }
+
+				});
+			}
+
+			// Set up the mandala interactivity.
+			init(true);
+		}
+	</script>
 </head>
-
-<body style="background-image: linear-gradient(to right, rgb(212, 255, 241), rgb(223, 212, 255))">
-    <br /><br /><br /><br />
-    <h1> Paintify </h1>
-    <div>
-        <br/>
-        <h2>Info and Tips</h2>
-        <h3>To clear a section in your artwork, use white to fill it in!</h3>
-        <br/>
-        <h2>Relaxed Mode</h2>
-        <h3>Sit back, relax, and color in our Relaxed Mode! Having a preselected color palette makes the coloring experience more relaxing and less stressful since you don't have to think or worry about what colors to choose. 
-            We also offer easier coloring pages!
-        </h3>
-        <br/>
-        <h2>Creative Mode</h2>
-        <h3>Feel ultimate creative freedom in Creative Mode! Customize your own colors with our easy to use color wheel. Choose any color you want from an infite rainbow of colors!
-            We also offer more complex coloring pages!
-        </h3>
-
-
-    </div>
+<body>
+	<h1>Colorify</h1>
+	<h2>Creative Mode</h2>
+	<canvas id="myCanvas" width="750px" height="750px"></canvas>
+	<div id="colorpicker"></div>
 </body>
-
 <footer>
     <a href="/coloring/info">
         <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-info-square" viewBox="0 0 16 16">
